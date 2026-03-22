@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -29,10 +31,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class ConfigSeguridad {
-	
 	@Autowired
 	private UserDetailsServiceImp service;
-	
 	@Autowired
 	private JwtTokenVerificador verificadorJwt;
 	
@@ -81,4 +81,9 @@ public class ConfigSeguridad {
         source.registerCorsConfiguration("/**",configuration);
         return source;
     }
+	
+	@Bean
+	RoleHierarchy roleHierarchy() {
+		return RoleHierarchyImpl.fromHierarchy("ROLE_ADMIN > ROLE_EMPLEADO \n ROLE_EMPLEADO > ROLE_CLIENTE");
+	}
 }

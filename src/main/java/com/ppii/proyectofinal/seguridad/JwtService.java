@@ -9,9 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ppii.proyectofinal.usuario.Usuario;
+import com.ppii.proyectofinal.entidades.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,7 +21,8 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-	private static final String LLAVE = "AEBCA2C2E4056E44DC49ED00924D4788617B68D6076F4760F35DBA977CFFED73A3C89AEB6630FE9C2478CF17FEF2910DF6FD2502B52E28472EB8A0CAF01A7814";
+	@Value("${jwt.secret}")
+	private static String LLAVE;
 	
 	private static final long VALIDEZ = TimeUnit.MINUTES.toMillis(30);
 	
